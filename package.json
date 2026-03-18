@@ -8,9 +8,9 @@
     "typescript": "^5"
   },
   "scripts": {
-    "start": "bun run trex.ts -i",
-    "list": "bun run trex.ts list",
-    "req:login": "bun run trex.ts req login2"
+    "start": "bun run index.ts -i",
+    "list": "bun run index.ts list",
+    "req:login": "bun run index.ts req login2"
   },
   "dependencies": {
     "node-jq": "^6.3.1"
