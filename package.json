@@ -3,9 +3,9 @@
   "version": "0.2.2",
   "description": "Terminal-based tool for HTTP requests (Trex)",
   "type": "module",
-  "main": "./dist/artifcats/trex-linux-x64",
+  "main": "./dist/artifacts/trex-linux-x64/trex-linux-x64",
   "bin": {
-    "trex": "./dist/artifacts/trex-linux-x64"
+    "trex": "./dist/artifacts/trex-linux-x64/trex-linux-x64"
   },
   "publishConfig": {
     "access": "public"
