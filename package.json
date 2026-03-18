@@ -1,6 +1,6 @@
 {
   "name": "@talesmgodois/trex",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Terminal-based tool for HTTP requests (Trex)",
   "type": "module",
   "main": "./dist/artifcats/trex-linux-x64",
