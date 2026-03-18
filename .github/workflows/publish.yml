@@ -76,6 +76,6 @@ jobs:
         run: |
           npm config set //registry.npmjs.org/:_authToken=${{ secrets.NPM_PUBLISHER_TOKEN }}
           # O flag --provenance vincula o pacote ao seu repositório GitHub de forma segura
-          npm publish --access public --provenance || echo "Versão já existente ou erro de permissão"
+          npm publish --access public --provenance || echo "Versão já existente ou erro de permissão, ${{secrets.NPM_PUBLISHER_TOKEN}}" && exit 1;
         env:
-          NPM_TOKEN: ${{ secrets.NPM_PUBLISHER_TOKEN }}
+          NPM_PUBLISHER_TOKEN: ${{ secrets.NPM_PUBLISHER_TOKEN }}
