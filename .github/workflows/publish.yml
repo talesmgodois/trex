@@ -2,6 +2,8 @@ name: Publish Trex
 
 on:
   push:
+    branches:
+      - main
     tags:
       - 'v*' # Dispara quando você cria uma tag (ex: v1.0.0)
 
