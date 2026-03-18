@@ -38,7 +38,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.artifact_name }}
-          path: ./dist/artifacts/
+          path: ./dist/${{ matrix.artifact_name }}
 
   release:
     needs: build
@@ -64,9 +64,9 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            ./dist/artifacts/trex-linux-x64
-            ./dist/artifacts/trex-macos-arm64
-            ./dist/artifacts/trex-win-x64.exe
+            ./dist/artifacts/trex-linux-x64/trex-linux-x64
+            ./dist/artifacts/trex-macos-arm64/trex-macos-arm64
+            ./dist/artifacts/trex-win-x64.exe/trex-win-x64.exe
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
