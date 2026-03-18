@@ -59,16 +59,16 @@ jobs:
       - name: Download all artifacts
         uses: actions/download-artifact@v4
         with:
-          path: ./artifacts
+          path: ./dist/artifacts
 
       - name: Create GitHub Release
         if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            artifacts/trex-linux-x64/trex-linux-x64
-            artifacts/trex-macos-arm64/trex-macos-arm64
-            artifacts/trex-win-x64.exe/trex-win-x64.exe
+            ./dist/artifacts/trex-linux-x64/trex-linux-x64
+            ./dist/artifacts/trex-macos-arm64/trex-macos-arm64
+            ./dist/artifacts/trex-win-x64.exe/trex-win-x64.exe
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
