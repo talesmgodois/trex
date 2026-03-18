@@ -45,6 +45,7 @@ jobs:
   release:
     needs: build
     runs-on: ubuntu-latest
+    environment: production
     permissions:
       contents: write
       id-token: write # Essencial para --provenance no NPM moderno
