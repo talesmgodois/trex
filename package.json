@@ -1,21 +1,23 @@
 {
-  "name": "trex",
+  "name": "@talesmgodois/trex",
+  "version": "0.1.0",
+  "description": "Terminal-based tool for HTTP requests (Trex)",
+  "type": "module",
+  "main": "./dist/trex-linux-x64",
+  "bin": {
+    "trex": "./dist/trex-linux-x64"
+  },
   "publishConfig": {
     "access": "public"
   },
+  "files": [
+    "dist",
+    "package.json"
+  ],
   "devDependencies": {
     "@types/bun": "latest"
   },
-  "peerDependencies": {
-    "typescript": "^5"
-  },
-  "scripts": {
-    "start": "bun run ./src/index.ts -i",
-    "list": "bun run ./src/index.ts list",
-    "req:login": "bun run ./src/index.ts req login2"
-  },
   "dependencies": {
     "node-jq": "^6.3.1"
-  },
-  "version": "0.1.0"
+  }
 }
