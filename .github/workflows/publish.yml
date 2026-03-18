@@ -38,7 +38,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.artifact_name }}
-          path: ./dist/${{ matrix.artifact_name }}
+          path: ./dist/artifacts/
 
   release:
     needs: build
