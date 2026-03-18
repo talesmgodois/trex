@@ -1,5 +1,5 @@
 {
-  "name": "@talesmgodois/trex",
+  "name": "trex",
   "version": "0.1.0",
   "description": "Terminal-based tool for HTTP requests (Trex)",
   "type": "module",
@@ -21,6 +21,10 @@
     "node-jq": "^6.3.1"
   },
   "repository": {
-    "url": "https://github.com/talesmgodois/trex"
-  }
+    "url": "https://github.com/talesmgodois/trex",
+    "type": "git"
+  },
+  "homepage": "https://github.com/talesmgodois/trex",
+  "author": "talesmgodois",
+  "license": "MIT"
 }
