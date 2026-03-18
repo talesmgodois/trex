@@ -1,6 +1,6 @@
 {
   "name": "trex",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Terminal-based tool for HTTP requests (Trex)",
   "type": "module",
   "main": "./dist/trex-linux-x64",
