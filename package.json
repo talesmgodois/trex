@@ -2,7 +2,7 @@
   "name": "trex",
   "publishConfig": {
     "access": "public"
-  }
+  },
   "devDependencies": {
     "@types/bun": "latest"
   },
