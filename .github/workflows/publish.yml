@@ -74,8 +74,8 @@ jobs:
       - name: Publish to NPM
         # A publicação só ocorre se o token estiver presente e for um push de tag ou master
         run: |
-          npm config set //registry.npmjs.org/:_authToken=${{ secrets.NPM_PUBLISHER_TOKEN }}
+          npm config set //registry.npmjs.org/:_authToken=${NPM_PUBLISHER_TOKEN}
           # O flag --provenance vincula o pacote ao seu repositório GitHub de forma segura
-          npm publish --access public --provenance || echo "Versão já existente ou erro de permissão, ${{secrets.NPM_PUBLISHER_TOKEN}}" && exit 1;
+          npm publish --access public --provenance || echo "Versão já existente ou erro de permissão, ${NPM_PUBLISHER_TOKEN}" && exit 1;
         env:
           NPM_PUBLISHER_TOKEN: ${{ secrets.NPM_PUBLISHER_TOKEN }}
