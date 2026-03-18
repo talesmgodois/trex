@@ -37,6 +37,12 @@ export const createPostSample = addHttpFunc("createPostSample", {
   description: "Create a post (JSONPlaceholder)",
 });
 
+export const createPostSample2 = addHttpFunc("createPostSample2", {
+  method: "POST",
+  url: "{{JSON_BASE_URL}}/posts",
+  description: "Create a post (JSONPlaceholder)",
+});
+
 // --- Pure TS helper to verify REPL/function wiring ---
 
 export const sumParams = addFunction("sumParams", (params: { a: number; b: number }) => {
