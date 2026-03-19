@@ -25,5 +25,11 @@
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "noPropertyAccessFromIndexSignature": false
-  }
+  },
+  "exclude": [
+    "node_modules",
+    "./src/tmpls/**/*",
+    "./src/tmpls/**/*.tmpl.ts",
+    "**/*.tmpl.ts"
+  ]
 }

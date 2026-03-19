@@ -1,5 +1,5 @@
 // trex.ts
-import { regEnv, env } from "./trex.lib.ts";
+import { regEnv, env } from "./lib/trex.lib.ts";
 
 const envs = {
     dev: "dev",

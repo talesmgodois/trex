@@ -1,9 +1,9 @@
 import * as path from "node:path";
 import { pathToFileURL } from "node:url";
 
-import "./trex.envs";
 
-import { cli } from "./trex.lib";
+import { cli } from "./lib/trex.lib";
+export * from "./lib/trex.lib";
 
 const args = process.argv.slice(2);
 

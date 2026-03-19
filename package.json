@@ -3,9 +3,19 @@
   "version": "0.2.3",
   "description": "Terminal-based tool for HTTP requests (Trex)",
   "type": "module",
-  "main": "./dist/artifacts/trex-linux-x64/trex-linux-x64",
+  "main": "./dist/trex.lib.js",
+  "types": "./dist/trex.lib.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/trex.lib.js",
+      "types": "./dist/trex.lib.d.ts"
+    }
+  },
+  "homepage": "https://github.com/talesmgodois/trex",
+  "author": "talesmgodois",
+  "license": "MIT",
   "bin": {
-    "trex": "./dist/artifacts/trex-linux-x64/trex-linux-x64"
+    "trex": "./bin/wrapper.js"
   },
   "publishConfig": {
     "access": "public"
@@ -18,13 +28,23 @@
     "@types/bun": "latest"
   },
   "dependencies": {
-    "node-jq": "^6.3.1"
+    "node-jq": "^6.3.1",
+    "node-plop": "^0.32.3",
+    "plop": "^4.0.5"
   },
   "repository": {
     "url": "https://github.com/talesmgodois/trex",
     "type": "git"
   },
-  "homepage": "https://github.com/talesmgodois/trex",
-  "author": "talesmgodois",
-  "license": "MIT"
+  "scripts": {
+    "start": "bun run ./src/index.ts",
+    "start:config": "bun run ./src/index.ts",
+    "start:i": "bun run ./src/index.ts --config ",
+    "list": "bun run ./src/index.ts list",
+    "req:login": "bun run ./src/index.ts req login2",
+    "build": "./scripts/build.sh",
+    "clean": "rm -rf dist",
+    "test": "bun test",
+    "gen": "bunx plop --plopfile plopfile.ts"
+  }
 }

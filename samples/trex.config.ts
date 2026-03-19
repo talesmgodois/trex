@@ -3,7 +3,13 @@
 // Run:
 //   bun run ./src/index.ts --config ./samples/trex.config.ts req getTodo
 
-import { addFunction, addHttpFunc, env, regEnv, trex } from "../src/trex.lib.ts";
+import {
+  addFunction,
+  addHttpFunc,
+  env,
+  regEnv,
+  trex,
+} from "../src/lib/trex.lib.ts";
 
 // Register a dedicated environment for this sample config.
 regEnv("public", {

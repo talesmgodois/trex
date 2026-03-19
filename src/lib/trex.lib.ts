@@ -1,6 +1,11 @@
 // trex.lib.ts
-import readline from "node:readline";
+import readline from "readline";
+import path from "path";
 import jq from 'node-jq';
+
+import configTemplate from "../tmpls/init_default/trex.config.tmpl" with { type: "text" };
+import envsTemplate from "../tmpls/init_default/trex.envs.tmpl" with { type: "text" };
+import { config } from "./config.ts";
 
 type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
 
@@ -492,7 +497,7 @@ class TrexEngine {
             this.render();
             const prompt = this.isReplMode ? "\x1b[34m(ts)>\x1b[0m " : "\x1b[32m(trex)>\x1b[0m ";
 
-            rl.question(prompt, async (input) => {
+            rl.question(prompt, async (input: any) => {
                 const line = input.trim();
                 if (!line) return loop();
 
@@ -584,6 +589,78 @@ class TrexEngine {
             process.exit(0);
         });
     }
+    // --- INIT ---
+
+    private async init(args: string[]) {
+        const RESERVED = new Set(['--path', '--run-time']);
+
+        const targetDir = this.flagValue(args, '--path') ?? process.cwd();
+        const runtime   = this.flagValue(args, '--run-time') ?? 'node';
+
+        if (runtime !== 'bun' && runtime !== 'node') {
+            console.error(`❌ Invalid runtime "${runtime}". Accepted values: "bun" or "node".`);
+            return;
+        }
+
+        const resolvedPath = path.resolve(targetDir);
+
+        // Collect all user-defined flags (excluding reserved ones) as template vars
+        const userVars: Record<string, string> = {};
+        for (let i = 0; i < args.length; i++) {
+            const arg = args[i];
+            if (arg?.startsWith('--') && !RESERVED.has(arg)) {
+                const next = args[i + 1];
+                if (next && !next.startsWith('--')) {
+                    userVars[arg.slice(2)] = next;
+                    i++;
+                }
+            }
+        }
+
+        const name = userVars['name'] ?? path.basename(resolvedPath);
+        const description = userVars['description'] ?? '';
+
+        // Merge: config defaults < user flags
+        const templateVars: Record<string, string> = {
+            ...config.templates.init,
+            ...userVars,
+            name,
+            description,
+        };
+
+        console.log(`\x1b[34m🦖 Initializing "${name}" at ${resolvedPath} using ${runtime}...\x1b[0m`);
+
+        Bun.spawnSync(['mkdir', '-p', resolvedPath]);
+
+        const initCmd = runtime === 'bun' ? ['bun', 'init', '-y'] : ['npm', 'init', '-y'];
+        Bun.spawnSync(initCmd, { cwd: resolvedPath, stdout: 'inherit', stderr: 'inherit' });
+
+        const pkgPath = path.join(resolvedPath, 'package.json');
+        const pkg = await Bun.file(pkgPath).json();
+        pkg.name = name;
+        pkg.description = description;
+        await Bun.write(pkgPath, JSON.stringify(pkg, null, 2) + '\n');
+
+        const installCmd = runtime === 'bun'
+            ? ['bun', 'add', config.templates.init.tsNpmLibrary]
+            : ['npm', 'install', '--save', config.templates.init.tsNpmLibrary];
+        Bun.spawnSync(installCmd, { cwd: resolvedPath, stdout: 'inherit', stderr: 'inherit' });
+
+        await Bun.write(path.join(resolvedPath, 'trex.config.ts'), this.renderTemplate(configTemplate, templateVars));
+        await Bun.write(path.join(resolvedPath, 'trex.envs.ts'), this.renderTemplate(envsTemplate, templateVars));
+
+        console.log(`\x1b[32m✅ Done! Created trex.config.ts and trex.envs.ts at ${resolvedPath}\x1b[0m`);
+    }
+
+    private renderTemplate(template: string, vars: Record<string, string>): string {
+        return template.replace(/\{\{(\w+)\}\}/g, (_, key) => vars[key] ?? '');
+    }
+
+    private flagValue(args: string[], flag: string): string | undefined {
+        const idx = args.indexOf(flag);
+        return idx !== -1 ? args[idx + 1] : undefined;
+    }
+
     // --- LÓGICA CLI (DEFAULT) ---
     async handleCliArgs(args: string[]) {
 
@@ -639,6 +716,9 @@ class TrexEngine {
                 break;
             case 'define':
                 this.define(arg1);
+                break;
+            case 'init':
+                await this.init(args);
                 break;
             case 'help':
             default:
